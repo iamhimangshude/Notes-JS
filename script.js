@@ -9,7 +9,11 @@ document.addEventListener("DOMContentLoaded", () => {
   const noteInput = document.getElementById("note-input");
   const addNoteBtn = document.getElementById("add-note-btn");
 
-  let notes = [];
+  let notes = JSON.parse(localStorage.getItem("notes")) || [];
+
+  notes.forEach((note) => {
+    renderNote(note);
+  });
 
   addBtn.addEventListener("click", () => {
     modalScreen.classList.remove("hidden");
@@ -50,5 +54,9 @@ document.addEventListener("DOMContentLoaded", () => {
     notesList.appendChild(li);
 
     modalScreen.classList.add("hidden");
+  }
+
+  function saveNoteToLocal() {
+    localStorage.setItem("notes", JSON.stringify(notes));
   }
 });
