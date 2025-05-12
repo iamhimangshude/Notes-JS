@@ -11,7 +11,44 @@ document.addEventListener("DOMContentLoaded", () => {
 
   let notes = [];
 
-  addBtn.addEventListener("click", displayModal);
+  addBtn.addEventListener("click", () => {
+    modalScreen.classList.remove("hidden");
+  });
+  closeBtn.addEventListener("click", () => {
+    modalScreen.classList.add("hidden");
+  });
 
-  function displayModal() {}
+  addNoteBtn.addEventListener("click", () => {
+    let title = noteTitle.value.trim();
+    let content = noteInput.value;
+    if (title === "" && content === "") return;
+    let note = {
+      id: Date.now(),
+      title,
+      content,
+    };
+    notes.push(note);
+    renderNote(note);
+    saveNoteToLocal();
+  });
+
+  function renderNote(noteObj) {
+    const li = document.createElement("li");
+    const div = document.createElement("div");
+    const h2 = document.createElement("h2");
+    const p = document.createElement("p");
+
+    div.classList.add("close-btn");
+
+    li.setAttribute("data-id", noteObj.id);
+    h2.textContent = noteObj.title;
+    p.textContent = noteObj.content;
+    div.innerHTML = "&times;";
+
+    li.append(div, h2, p);
+
+    notesList.appendChild(li);
+
+    modalScreen.classList.add("hidden");
+  }
 });
