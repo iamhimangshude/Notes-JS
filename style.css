@@ -27,6 +27,10 @@ header {
     align-items: center;
 }
 
+header h1 {
+    color: var(--secondary-color);
+}
+
 nav ul {
     display: flex;
     flex-direction: row-reverse;
@@ -163,6 +167,7 @@ nav ul li input {
     flex-direction: column;
     overflow: hidden;
     background: linear-gradient(120deg, var(--primary-color), #cccccc5a);
+    color: var(--secondary-color);
 }
 
 li div.action-btns {
