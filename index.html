@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notes</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <header>
+        <h1>Notes</h1>
+        <nav>
+            <ul>
+                <li>
+                    <button class="btn" id="add-btn">Add</button>
+                </li>
+                <li>
+                    <input type="text" name="search" id="search-box">
+                    <button class="btn" id="search-btn">Search</button>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="container">
+        <ul id="notes-list">
+            <!-- Notes to be added dynamically -->
+        </ul>
+        <div class="modal-window-screen hidden">
+            <div class="modal-window-container">
+                <div class="modal-header">
+                    <h1>Add Note</h1>
+                    <div class="close-btn">&times;</div>
+                </div>
+                <input type="text" name="title" id="note-title-input">
+                <textarea name="note-field" id="note-input"></textarea>
+                <button id="add-note-btn" class="btn">Add</button>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>
