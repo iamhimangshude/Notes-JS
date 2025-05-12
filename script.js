@@ -5,6 +5,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const notesList = document.getElementById("notes-list");
   const modalScreen = document.querySelector(".modal-window-screen");
   const closeBtn = document.querySelector(".close-btn");
+  const modalHeaderTitle = document.querySelector("#modal-header-title");
+  const noteBtnName = document.querySelector("#note-btn-name");
   const noteTitle = document.getElementById("note-title-input");
   const noteInput = document.getElementById("note-input");
   const addNoteBtn = document.getElementById("add-note-btn");
@@ -18,45 +20,124 @@ document.addEventListener("DOMContentLoaded", () => {
   addBtn.addEventListener("click", () => {
     modalScreen.classList.remove("hidden");
   });
+
   closeBtn.addEventListener("click", () => {
     modalScreen.classList.add("hidden");
   });
 
+  // addNoteBtn Event Listener
   addNoteBtn.addEventListener("click", () => {
     let title = noteTitle.value.trim();
     let content = noteInput.value;
     if (title === "" && content === "") return;
-    let note = {
-      id: Date.now(),
-      title,
-      content,
-    };
-    notes.push(note);
-    renderNote(note);
-    saveNoteToLocal();
+
+    // Checks for the modalScreen data attribute to be update
+    if (modalScreen.getAttribute("data-status") === "update") {
+      let id = +modalScreen.getAttribute("data-id");
+      let targetNoteData = notes.find((val) => val.id === id);
+
+      targetNoteData.title = title;
+      targetNoteData.content = content;
+
+      renderNote();
+      saveNoteToLocal();
+
+      modalScreen.classList.add("hidden");
+
+      // clearing the input fields
+      noteTitle.value = "";
+      noteInput.value = "";
+
+      // resetting the modalHeaderTitle and noteBtnName
+      modalHeaderTitle.textContent = "Add";
+      noteBtnName.textContent = "Add";
+
+      // resetting the modalScreen data attribute
+      modalScreen.setAttribute("data-status", "");
+    } else {
+      // else, continues normal way
+      let note = {
+        id: Date.now(),
+        title,
+        content,
+      };
+      noteTitle.value = "";
+      noteInput.value = "";
+      notes.push(note);
+      renderNote();
+      saveNoteToLocal();
+      modalScreen.classList.add("hidden");
+    }
   });
 
-  function renderNote(noteObj) {
-    const li = document.createElement("li");
-    const div = document.createElement("div");
-    const h2 = document.createElement("h2");
-    const p = document.createElement("p");
+  // notesList(action btns) event listener
+  notesList.addEventListener("click", (e) => {
+    if (e.target.id === "edit-note-btn") {
+      console.log("clicked edit");
+      e.stopPropagation();
+      let noteData = notes.find(
+        (val) => val.id === +e.target.getAttribute("data-id")
+      );
+      modalScreen.classList.remove("hidden");
+      modalScreen.setAttribute("data-id", noteData.id);
+      modalScreen.setAttribute("data-status", "update");
+      noteTitle.value = noteData.title;
+      noteInput.value = noteData.content;
+      noteBtnName.textContent = "Save";
+      modalHeaderTitle.textContent = "Edit";
+    }
+    if (e.target.id === "delete-note-btn") {
+      e.stopPropagation();
+      console.log("clicked delete");
+      let noteId = +e.target.getAttribute("data-id");
+      console.log(noteId);
+      notes = notes.filter((item) => item.id !== noteId);
+      console.log(notes);
+      renderNote();
+      saveNoteToLocal();
+    }
+  });
 
-    div.classList.add("close-btn");
+  // FIXED: renderNote() now needs no params and renders the DOM from data in notes (array)
+  function renderNote() {
+    notesList.innerHTML = ``;
+    notes.forEach((item) => {
+      const li = document.createElement("li");
+      const divActionBtns = document.createElement("div");
+      const editBtn = document.createElement("button");
+      const deleteBtn = document.createElement("button");
+      const h2 = document.createElement("h2");
+      const p = document.createElement("p");
 
-    li.setAttribute("data-id", noteObj.id);
-    h2.textContent = noteObj.title;
-    p.textContent = noteObj.content;
-    div.innerHTML = "&times;";
+      divActionBtns.classList.add("action-btns");
 
-    li.append(div, h2, p);
+      // editBtn
+      editBtn.id = "edit-note-btn";
+      editBtn.setAttribute("data-id", item.id);
+      editBtn.textContent = "Edit";
 
-    notesList.appendChild(li);
+      // deleteBtn
+      deleteBtn.id = "delete-note-btn";
+      deleteBtn.setAttribute("data-id", item.id);
+      deleteBtn.textContent = "Delete";
 
-    modalScreen.classList.add("hidden");
+      divActionBtns.append(editBtn, deleteBtn);
+
+      h2.textContent = item.title;
+      p.textContent = item.content;
+
+      li.setAttribute("data-id", item.id);
+      li.append(divActionBtns, h2, p);
+
+      notesList.appendChild(li);
+    });
   }
 
   function saveNoteToLocal() {
     localStorage.setItem("notes", JSON.stringify(notes));
   }
 });
+
+// TODO:
+// -> Implementation of Search feature
+// -> Need to be mobile friendly!
