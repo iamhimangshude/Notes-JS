@@ -6,21 +6,21 @@
 }
 
 :root {
-    --primary-color: #8D99AE;
-    --secondary-color: #2B2D42;
-    --text-color: #EDF2F4;
-    --error-color: #EF233C;
-    --error-hover-color: #D90429;
+    --primary-color: #1D3557;
+    --secondary-color: #A8DADC;
+    --error-color: #E63946;
+    --button-color: #457B9D;
 }
 
 body {
-    background-color: var(--secondary-color);
+    background-color: var(--primary-color);
 }
 
 header {
     padding: 10px 20px;
     margin: 10px;
-    background-color: var(--primary-color);
+    background-color: transparent;
+    border: 2px solid var(--secondary-color);
     border-radius: 10px;
     display: flex;
     justify-content: space-between;
@@ -41,27 +41,30 @@ nav ul {
 
 nav ul li .btn {
     padding: 10px 15px;
-    border: 1px solid;
+    border: 1px solid var(--secondary-color);
     font-size: 14px;
-    border-radius: 4px;
-    background-color: var(--secondary-color);
+    border-radius: 8px;
+    background-color: transparent;
     cursor: pointer;
-    color: var(--text-color);
+    color: var(--secondary-color);
 
     &:hover {
-        background-color: var(--primary-color);
+        background-color: var(--secondary-color);
+        color: var(--primary-color);
     }
 }
 
 nav ul li input {
+    margin-right: 5px;
     padding: 5px;
     outline: none;
     border: none;
     border-bottom: 1px solid;
     background-color: transparent;
+    color: var(--secondary-color);
 
     &::placeholder {
-        color: var(--text-color);
+        color: var(--secondary-color);
     }
 }
 
@@ -83,14 +86,14 @@ nav ul li input {
     position: relative;
     top: 150px;
     margin: auto;
-    background-color: var(--secondary-color);
+    background-color: #1b1e3f;
     height: auto;
     width: 35%;
     padding: 10px;
     border-radius: 10px;
     display: flex;
     flex-direction: column;
-    color: var(--text-color);
+    color: var(--secondary-color);
 }
 
 .modal-header {
@@ -114,20 +117,21 @@ nav ul li input {
     font-family: Arial, Helvetica, sans-serif;
     border: none;
     border-bottom: 1px solid;
-    color: var(--text-color);
+    color: var(--secondary-color);
 
     &::placeholder {
-        color: var(--primary-color);
+        color: var(--secondary-color);
     }
 }
 
 .modal-window-container textarea {
     height: 150px;
     margin-bottom: 15px;
+    border: 1px solid var(--secondary-color);
+    border-radius: 5px;
     resize: none;
-    /* background-color: var(--primary-color); */
     background-color: transparent;
-    color: var(--text-color);
+    color: var(--secondary-color);
     outline: none;
     padding: 4px;
     font-size: 14px;
@@ -140,10 +144,15 @@ nav ul li input {
     padding: 5px;
     font-size: 16px;
     border-radius: 5px;
-    border: 1px solid;
+    border: 1px solid var(--secondary-color);
+    background-color: transparent;
     cursor: pointer;
-    background-color: var(--primary-color);
     color: inherit;
+
+    &:hover {
+        background-color: var(--primary-color);
+        color: var(--secondary-color);
+    }
 }
 
 #notes-list {
@@ -155,22 +164,27 @@ nav ul li input {
 }
 
 #notes-list li {
-    width: 200px;
+    width: 300px;
     min-width: 150px;
-    height: 150px;
-    background-color: var(--primary-color);
+    height: 200px;
+    background-color: transparent;
     padding: 10px;
+    border: 2px solid var(--secondary-color);
     border-radius: 10px;
     word-wrap: normal;
     display: flex;
     flex-direction: wrap;
     flex-direction: column;
     overflow: hidden;
-    background: linear-gradient(120deg, var(--primary-color), #cccccc5a);
     color: var(--secondary-color);
+
+    &:hover {
+        background-color: var(--secondary-color);
+        color: var(--primary-color);
+    }
 }
 
-li div.action-btns {
+#notes-list li div.action-btns {
     align-self: flex-end;
     display: flex;
     justify-content: space-between;
@@ -178,9 +192,9 @@ li div.action-btns {
     gap: 10px;
 }
 
-li div.action-btns button {
+#notes-list li div.action-btns button {
     padding: 3px 5px;
-    border-radius: 5px;
+    border-radius: 8px;
     border: 1px solid;
     cursor: pointer;
     font-size: 14px;
@@ -191,10 +205,22 @@ li div.action-btns button {
 
     &:hover {
         background-color: var(--secondary-color);
+        color: var(--primary-color);
     }
 }
 
-li div.action-btns button#delete-note-btn:hover {
+#notes-list li div.action-btns button#delete-note-btn:hover {
     background-color: var(--error-color);
-    color: var(--text-color);
+    color: #fff;
+}
+
+#notes-list li h2 {
+    margin-bottom: 5px;
+    color: inherit;
+    font-size: 36px;
+}
+
+#notes-list li p {
+    color: inherit;
+    font-size: 20px;
 }
