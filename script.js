@@ -22,6 +22,19 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   closeBtn.addEventListener("click", () => {
+    if (modalScreen.getAttribute("data-status") === "update") {
+      // resettnig input values
+      noteTitle.value = "";
+      noteInput.value = "";
+
+      // resetting modalHeaderTitle and noteBtnName
+      noteBtnName.textContent = "Add";
+      modalHeaderTitle.textContent = "Add";
+
+      // resetting the modalScreen Attribute
+      modalScreen.setAttribute("data-status", "");
+    }
+    // state is maintained in modal form
     modalScreen.classList.add("hidden");
   });
 
