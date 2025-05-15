@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
   const addBtn = document.getElementById("add-btn");
   const searchBox = document.getElementById("search-box");
-  const searchBtn = document.getElementById("search-btn");
+  const clearBtn = document.getElementById("clear-btn");
   const notesList = document.getElementById("notes-list");
   const modalScreen = document.querySelector(".modal-window-screen");
   const closeBtn = document.querySelector(".close-btn");
@@ -13,8 +13,27 @@ document.addEventListener("DOMContentLoaded", () => {
 
   let notes = JSON.parse(localStorage.getItem("notes")) || [];
 
-  notes.forEach((note) => {
-    renderNote(note);
+  renderNote(notes);
+
+  searchBox.addEventListener("keypress", (e) => {
+    let searchTerm = searchBox.value.trim();
+    clearBtn.classList.remove("hidden");
+    if (e.key === "Enter" && searchTerm !== "") {
+      let filteredNotes = notes.filter(
+        (item) =>
+          item.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          item.content.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+      console.log(filteredNotes);
+      renderNote(filteredNotes);
+      if (filteredNotes.length === 0) renderNote(notes);
+    }
+  });
+
+  clearBtn.addEventListener("click", () => {
+    searchBox.value = "";
+    clearBtn.classList.add("hidden");
+    renderNote(notes);
   });
 
   addBtn.addEventListener("click", () => {
@@ -52,7 +71,7 @@ document.addEventListener("DOMContentLoaded", () => {
       targetNoteData.title = title;
       targetNoteData.content = content;
 
-      renderNote();
+      renderNote(notes);
       saveNoteToLocal();
 
       modalScreen.classList.add("hidden");
@@ -77,7 +96,7 @@ document.addEventListener("DOMContentLoaded", () => {
       noteTitle.value = "";
       noteInput.value = "";
       notes.push(note);
-      renderNote();
+      renderNote(notes);
       saveNoteToLocal();
       modalScreen.classList.add("hidden");
     }
@@ -106,15 +125,15 @@ document.addEventListener("DOMContentLoaded", () => {
       console.log(noteId);
       notes = notes.filter((item) => item.id !== noteId);
       console.log(notes);
-      renderNote();
+      renderNote(notes);
       saveNoteToLocal();
     }
   });
 
-  // FIXED: renderNote() now needs no params and renders the DOM from data in notes (array)
-  function renderNote() {
+  // UPDATE: renderNote() now needs a parameter and renders the DOM from data in parameter (array)
+  function renderNote(noteArr) {
     notesList.innerHTML = ``;
-    notes.forEach((item) => {
+    noteArr.forEach((item) => {
       const li = document.createElement("li");
       const divActionBtns = document.createElement("div");
       const editBtn = document.createElement("button");

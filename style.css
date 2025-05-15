@@ -63,6 +63,7 @@ nav ul li input {
     border-radius: 8px;
     background-color: transparent;
     color: var(--secondary-color);
+    width: 240px;
 
     &::placeholder {
         color: var(--secondary-color);
