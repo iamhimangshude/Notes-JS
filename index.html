@@ -10,21 +10,22 @@
 
 <body>
     <header>
-        <h1>Notes</h1>
-        <nav>
+        <h1 id="header-title">Notes</h1>
+        <nav id="header-nav">
             <ul>
                 <li>
                     <button class="btn" id="add-btn">Add</button>
                 </li>
                 <li>
                     <input type="text" placeholder="Search... (Type and hit Enter)" name="search" id="search-box">
-                    <button class="btn" id="clear-btn">Clear</button>
+                    <button class="btn hidden" id="clear-btn">Clear</button>
                 </li>
             </ul>
         </nav>
     </header>
 
     <div class="container">
+        <h1 id="notes-title">Notes</h1>
         <ul id="notes-list">
             <!-- Notes to be added dynamically -->
         </ul>
